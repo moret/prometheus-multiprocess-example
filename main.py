@@ -8,15 +8,15 @@ from prometheus_client import (
     multiprocess,
 )
 
+counter = Counter(
+    "http_requests_total",
+    "Total number of HTTP requests",
+    [],
+)
+
 
 async def app(scope, receive, send):
     registry = CollectorRegistry()
-    counter = Counter(
-        "http_requests_total",
-        "Total number of HTTP requests",
-        [],
-        registry=registry,
-    )
     assert scope["type"] == "http"
 
     if scope["path"] == "/metrics-doc":
